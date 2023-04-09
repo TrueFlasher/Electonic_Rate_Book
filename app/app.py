@@ -173,6 +173,81 @@ def update_teacher(teacher_id):
             conn.commit()
     return jsonify({"result": "Teacher updated successfully"}), 200
 
+
+# User routes
+@app.route("/user/<int:user_id>", methods=["DELETE"])
+def delete_user(user_id):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("delete_user", (user_id,))
+            conn.commit()
+    return jsonify({"result": "User deleted successfully"}), 200
+
+# Group routes
+@app.route("/group/<int:group_id>", methods=["DELETE"])
+def delete_group(group_id):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("delete_group", (group_id,))
+            conn.commit()
+    return jsonify({"result": "Group deleted successfully"}), 200
+
+# Subject routes
+@app.route("/subject/<int:subject_id>", methods=["DELETE"])
+def delete_subject(subject_id):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("delete_subject", (subject_id,))
+            conn.commit()
+    return jsonify({"result": "Subject deleted successfully"}), 200
+
+# Teacher routes
+@app.route("/teacher/<int:teacher_id>", methods=["DELETE"])
+def delete_teacher(teacher_id):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("delete_teacher", (teacher_id,))
+            conn.commit()
+    return jsonify({"result": "Teacher deleted successfully"}), 200
+
+
+# Exam Test routes
+@app.route("/exam_test", methods=["POST"])
+def create_exam_test():
+    data = request.get_json()
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("create_exam_test", (data["student_id"], data["teacher_id"], data["subject_id"], data["semester"], data["passed"]))
+            conn.commit()
+    return jsonify({"result": "Exam test created successfully"}), 201
+
+@app.route("/exam_test/<int:exam_test_id>", methods=["DELETE"])
+def delete_exam_test(exam_test_id):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("delete_exam_test", (exam_test_id,))
+            conn.commit()
+    return jsonify({"result": "Exam test deleted successfully"}), 200
+
+# Session Grade routes
+@app.route("/session_grade", methods=["POST"])
+def create_session_grade():
+    data = request.get_json()
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("create_session_grade", (data["student_id"], data["subject_id"], data["teacher_id"], data["semester"], data["grade"]))
+            conn.commit()
+    return jsonify({"result": "Session grade created successfully"}), 201
+
+@app.route("/session_grade/<int:session_grade_id>", methods=["DELETE"])
+def delete_session_grade(session_grade_id):
+    with get_connection() as conn:
+        with conn.cursor() as cur:
+            cur.callproc("delete_session_grade", (session_grade_id,))
+            conn.commit()
+    return jsonify({"result": "Session grade deleted successfully"}), 200
+
+
 # Exam Test routes
 @app.route("/exam_test/<int:exam_test_id>", methods=["PUT"])
 def set_exam_test_result(exam_test_id):

@@ -170,7 +170,79 @@ BEGIN
 END;
 $$;
 
+-- Create Exam Test
+CREATE OR REPLACE PROCEDURE create_exam_test(p_student_id INTEGER, p_teacher_id INTEGER, p_subject_id INTEGER, p_semester INTEGER, p_passed BOOLEAN)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO exam_tests (student_id, teacher_id, subject_id, semester, passed)
+  VALUES (p_student_id, p_teacher_id, p_subject_id, p_semester, p_passed);
+END;
+$$;
 
+-- Delete Exam Test
+CREATE OR REPLACE PROCEDURE delete_exam_test(p_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM exam_tests WHERE id = p_id;
+END;
+$$;
+
+-- Create Session Grade
+CREATE OR REPLACE PROCEDURE create_session_grade(p_student_id INTEGER, p_subject_id INTEGER, p_teacher_id INTEGER, p_semester INTEGER, p_grade grade_enum)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  INSERT INTO session_grades (student_id, subject_id, teacher_id, semester, grade)
+  VALUES (p_student_id, p_subject_id, p_teacher_id, p_semester, p_grade);
+END;
+$$;
+
+-- Delete Session Grade
+CREATE OR REPLACE PROCEDURE delete_session_grade(p_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM session_grades WHERE id = p_id;
+END;
+$$;
+
+-- Delete User
+CREATE OR REPLACE PROCEDURE delete_user(p_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM users WHERE id = p_id;
+END;
+$$;
+
+-- Delete Group
+CREATE OR REPLACE PROCEDURE delete_group(p_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM groups WHERE id = p_id;
+END;
+$$;
+
+-- Delete Subject
+CREATE OR REPLACE PROCEDURE delete_subject(p_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM subjects WHERE id = p_id;
+END;
+$$;
+
+-- Delete Teacher
+CREATE OR REPLACE PROCEDURE delete_teacher(p_id INTEGER)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+  DELETE FROM teachers WHERE id = p_id;
+END;
+$$;
 -- CREATE OR REPLACE FUNCTION update_user(p_token VARCHAR, p_user_id INTEGER, p_username VARCHAR, p_password VARCHAR, p_full_name VARCHAR, p_group_id INTEGER, p_is_admin BOOLEAN)
 -- RETURNS VOID AS $$
 -- DECLARE
